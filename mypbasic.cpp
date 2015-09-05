@@ -74,6 +74,16 @@ void compile(const char* filename)
     }
     endTest
 
+    makeTest(sc)
+    {
+        if (sc.getCurrentChar() == '\0') {
+            finished = true;
+        }
+
+        return Token();
+    }
+    endTest
+
     Parser parser(lexer);
 
     createTerminal(firstTerminal)

@@ -14,10 +14,13 @@
 				<Compiler>
 					<Add option="-std=c++11" />
 					<Add option="-g" />
-					<Add directory="../TheCompilerFramework/" />
+					<Add directory="../TheCompilerFramework/include" />
+					<Add directory="../TheCompilerFramework" />
 				</Compiler>
 				<Linker>
-					<Add directory="../TheCompilerFramework/" />
+					<Add library="..\TheCompilerFramework\bin\Debug\libCompilerFrameworkInCPP.a" />
+					<Add directory="../TheCompilerFramework/src" />
+					<Add directory="../TheCompilerFramework" />
 				</Linker>
 			</Target>
 			<Target title="Release">
