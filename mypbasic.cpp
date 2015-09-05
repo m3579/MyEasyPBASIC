@@ -19,6 +19,8 @@
  *
  */
 
+#include "Parser.hpp"
+
 #define VERSION 0.1
 
 int main(int argc, const char* argv[])
