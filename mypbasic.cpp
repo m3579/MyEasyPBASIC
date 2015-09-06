@@ -36,6 +36,10 @@ void compile(const char* filename);
 
 int main(int argc, const char* argv[])
 {
+    compile("");
+
+    return 0;
+
     // Skip the first argument (program name)
     argv++;
     argc--;
@@ -49,7 +53,7 @@ int main(int argc, const char* argv[])
     else if (argc == 1) {
         compile(argv[0]);
     }
-    
+
     else {
         std::cout << "I could not recognize this command\n"
                   << "$ pbasic [file]\n"
@@ -72,8 +76,10 @@ void compile(const char* filename)
     makeTest(sc)
     {
         const char currChar = sc.getCurrentChar();
+
         if (isNumber(currChar)) {
-            return Token(currChar, TTYPE_INT);
+            std::string currCharString(1, currChar);
+            return Token(sc.getLineNumber(), sc.getColumnNumber(), currCharString.c_str(), TTYPE_INT);
         }
 
         return Token();
@@ -83,7 +89,7 @@ void compile(const char* filename)
     makeTest(sc)
     {
         if (sc.getCurrentChar() == '\0') {
-            finished = true;
+            sc.finished = true;
         }
 
         return Token();
@@ -98,12 +104,20 @@ void compile(const char* filename)
     {
         astAction(tm)
         {
+            exit = true;
             return Node(tm.getCurrentToken(), NTYPE_INT);
         }
     }
     endTerminal
 
     parser.addTerminal(firstTerminal);
+
+    parser.noFind =
+        astAction(tm)
+        {
+            std::cout << "Error!\n";
+            return Node();
+        };
 
     ast::SyntaxTree tree(parser.createSyntaxTree());
 
