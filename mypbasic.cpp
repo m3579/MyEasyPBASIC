@@ -49,6 +49,12 @@ int main(int argc, const char* argv[])
     else if (argc == 1) {
         compile(argv[0]);
     }
+    
+    else {
+        std::cout << "I could not recognize this command\n"
+                  << "$ pbasic [file]\n"
+                  << "\n";
+    }
 }
 
 createTokenType(TTYPE_INT);
